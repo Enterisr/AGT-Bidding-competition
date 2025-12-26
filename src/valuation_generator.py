@@ -53,12 +53,20 @@ class ValuationGenerator:
         Randomly assign items to categories (high, low, mixed).
         This is done once per game so all teams have consistent categorization.
         
+        SECURITY: Item IDs are randomized to prevent teams from inferring
+        item types based on ID patterns or positions in the valuation vector.
+        
         Returns:
             Tuple of (high_value_items, low_value_items, mixed_value_items)
         """
+        # Generate all item IDs
         all_items = [ITEM_ID_FORMAT.format(i) for i in range(K_TOTAL_ITEMS)]
+        
+        # Shuffle to randomize which items belong to which category
+        # This prevents teams from inferring that "item_0-5 are always high value"
         np.random.shuffle(all_items)
         
+        # Assign shuffled items to categories
         high_value_items = all_items[:HIGH_VALUE_ITEMS]
         low_value_items = all_items[HIGH_VALUE_ITEMS:HIGH_VALUE_ITEMS + LOW_VALUE_ITEMS]
         mixed_value_items = all_items[HIGH_VALUE_ITEMS + LOW_VALUE_ITEMS:]
