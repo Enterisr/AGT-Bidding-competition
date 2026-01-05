@@ -25,7 +25,7 @@ from typing import Dict, List
 BUDGET_PER_ROUND = 4
 # PANIC_BUY_FACTOR = 1.5
 # PANIC_BUY_ROUNDS = 2
-AGRESSIVENESS = 0.7
+AGRESSIVENESS = 0.85
 
 
 class BiddingAgent:
@@ -87,7 +87,7 @@ class BiddingAgent:
         print(f"valuation: {my_valuation}")
         if bid > my_valuation:
             print(f"detected bid is bigger than value")
-            deduction_percentage = random.uniform(0.01, 0.05)
+            deduction_percentage = random.uniform(0.01, 0.2)
             bid = my_valuation * (1 - deduction_percentage)
 
         if bid > self.budget:
